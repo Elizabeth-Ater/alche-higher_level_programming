@@ -13,4 +13,7 @@ class Rectangle(Rectangle):
 
     def __str__(self):
         """String representation of rectangle."""
-        return f"[Rectangle] {self._Rectangle__width}/{self._Rectangle__height}"
+        return "[Rectangle] {}/{}".format(
+            self._Rectangle__width,
+            self._Rectangle__height
+        )
