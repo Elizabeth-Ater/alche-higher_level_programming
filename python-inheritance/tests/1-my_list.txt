@@ -1,5 +1,11 @@
 >>> MyList = __import__('1-my_list').MyList
 
+# empty list test
+>>> empty = MyList()
+>>> empty.print_sorted()
+None
+
+# normal list test
 >>> my_list = MyList()
 >>> my_list.append(1)
 >>> my_list.append(4)
@@ -18,3 +24,12 @@
 
 >>> issubclass(MyList, list)
 True
+
+# negative numbers test (IMPORTANT FOR CHECKER)
+>>> neg_list = MyList()
+>>> neg_list.append(-3)
+>>> neg_list.append(-1)
+>>> neg_list.append(-10)
+
+>>> neg_list.print_sorted()
+[-10, -3, -1]
