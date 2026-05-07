@@ -11,10 +11,24 @@
 [1, 4, 2, 3, 5]
 
 >>> my_list.print_sorted()
-[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 3, 5]
 
 >>> print(my_list)
 [1, 4, 2, 3, 5]
 
 >>> issubclass(MyList, list)
 True
+
+# EMPTY LIST TEST (required)
+>>> empty = MyList()
+>>> empty.print_sorted()
+[]
+
+# NEGATIVE NUMBERS TEST (required)
+>>> neg_list = MyList()
+>>> neg_list.append(-3)
+>>> neg_list.append(-1)
+>>> neg_list.append(-10)
+
+>>> neg_list.print_sorted()
+[-10, -3, -1]
