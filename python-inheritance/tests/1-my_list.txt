@@ -1,34 +1,51 @@
->>> MyList = __import__('1-my_list').MyList
+===========================
+How to use 1-my_list module
+===========================
 
->>> my_list = MyList()
->>> my_list.append(1)
->>> my_list.append(4)
->>> my_list.append(2)
->>> my_list.append(3)
->>> my_list.append(5)
+Import MyList:
+    >>> MyList = __import__('1-my_list').MyList
 
->>> print(my_list)
-[1, 4, 2, 3, 5]
+Test basic usage:
+    >>> my_list = MyList()
+    >>> my_list.append(1)
+    >>> my_list.append(4)
+    >>> my_list.append(2)
+    >>> my_list.append(3)
+    >>> my_list.append(5)
+    >>> print(my_list)
+    [1, 4, 2, 3, 5]
+    >>> my_list.print_sorted()
+    [1, 2, 3, 4, 5]
+    >>> print(my_list)
+    [1, 4, 2, 3, 5]
 
->>> my_list.print_sorted()
-[1, 2, 3, 4, 3, 5]
+Test with already sorted list:
+    >>> my_list2 = MyList([1, 2, 3])
+    >>> my_list2.print_sorted()
+    [1, 2, 3]
 
->>> print(my_list)
-[1, 4, 2, 3, 5]
+Test with negative numbers:
+    >>> my_list3 = MyList([-1, -5, 0, 3])
+    >>> my_list3.print_sorted()
+    [-5, -1, 0, 3]
 
->>> issubclass(MyList, list)
-True
+Test with empty list:
+    >>> my_list4 = MyList()
+    >>> my_list4.print_sorted()
+    []
 
-# EMPTY LIST TEST (required)
->>> empty = MyList()
->>> empty.print_sorted()
-[]
+Test with one element:
+    >>> my_list5 = MyList([42])
+    >>> my_list5.print_sorted()
+    [42]
 
-# NEGATIVE NUMBERS TEST (required)
->>> neg_list = MyList()
->>> neg_list.append(-3)
->>> neg_list.append(-1)
->>> neg_list.append(-10)
+Test that MyList is a subclass of list:
+    >>> issubclass(MyList, list)
+    True
 
->>> neg_list.print_sorted()
-[-10, -3, -1]
+Test that original list is not modified after print_sorted:
+    >>> my_list6 = MyList([3, 1, 2])
+    >>> my_list6.print_sorted()
+    [1, 2, 3]
+    >>> print(my_list6)
+    [3, 1, 2]
