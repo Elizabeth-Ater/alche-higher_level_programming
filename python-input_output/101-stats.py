@@ -5,7 +5,7 @@ import sys
 
 
 def print_stats(total_size, status_codes):
-    """Prints accumulated statistics"""
+    """Print stats"""
     print("File size: {}".format(total_size))
     for code in sorted(status_codes.keys()):
         if status_codes[code] > 0:
@@ -24,6 +24,7 @@ def main():
         405: 0,
         500: 0
     }
+
     line_count = 0
 
     try:
@@ -31,15 +32,15 @@ def main():
             parts = line.split()
 
             try:
-                file_size = int(parts[-1])
-                status_code = int(parts[-2])
+                status = int(parts[-2])
+                size = int(parts[-1])
             except (IndexError, ValueError):
                 continue
 
-            total_size += file_size
+            total_size += size
 
-            if status_code in status_codes:
-                status_codes[status_code] += 1
+            if status in status_codes:
+                status_codes[status] += 1
 
             line_count += 1
 
@@ -49,6 +50,9 @@ def main():
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
         raise
+
+    # 🔥 IMPORTANT FIX: always print at end
+    print_stats(total_size, status_codes)
 
 
 if __name__ == "__main__":
