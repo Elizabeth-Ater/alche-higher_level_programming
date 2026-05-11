@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Reads stdin and computes metrics"""
+"""Log parsing script"""
 
 import sys
 
@@ -7,7 +7,7 @@ import sys
 def print_stats(total_size, status_codes):
     print("File size: {}".format(total_size))
     for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
+        if status_codes[code]:
             print("{}: {}".format(code, status_codes[code]))
 
 
@@ -24,33 +24,37 @@ def main():
         500: 0
     }
 
-    line_count = 0
+    count = 0
 
     try:
         for line in sys.stdin:
-            try:
-                parts = line.split()
+            parts = line.split()
 
+            # 🚨 strict validation (IMPORTANT)
+            if len(parts) < 2:
+                continue
+
+            try:
                 status = int(parts[-2])
                 size = int(parts[-1])
-
-                total_size += size
-
-                if status in status_codes:
-                    status_codes[status] += 1
-
-                line_count += 1
-
-                if line_count % 10 == 0:
-                    print_stats(total_size, status_codes)
-
             except:
-                continue  # skip only bad lines
+                continue
+
+            total_size += size
+
+            if status in status_codes:
+                status_codes[status] += 1
+
+            count += 1
+
+            if count % 10 == 0:
+                print_stats(total_size, status_codes)
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
         raise
 
+    # final print ALWAYS required
     print_stats(total_size, status_codes)
 
 
