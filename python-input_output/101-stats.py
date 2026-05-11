@@ -6,7 +6,7 @@ import sys
 
 def print_stats(total_size, status_codes):
     print("File size: {}".format(total_size))
-    for code in sorted(status_codes.keys()):
+    for code in sorted(status_codes):
         if status_codes[code]:
             print("{}: {}".format(code, status_codes[code]))
 
@@ -30,10 +30,6 @@ def main():
         for line in sys.stdin:
             parts = line.split()
 
-            # 🚨 strict validation (IMPORTANT)
-            if len(parts) < 2:
-                continue
-
             try:
                 status = int(parts[-2])
                 size = int(parts[-1])
@@ -54,7 +50,6 @@ def main():
         print_stats(total_size, status_codes)
         raise
 
-    # final print ALWAYS required
     print_stats(total_size, status_codes)
 
 
