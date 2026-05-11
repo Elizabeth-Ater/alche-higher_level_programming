@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-"""Reads stdin line by line and computes metrics"""
+"""Reads stdin and computes metrics"""
 
 import sys
 
 
 def print_stats(total_size, status_codes):
-    """Print stats"""
     print("File size: {}".format(total_size))
     for code in sorted(status_codes.keys()):
         if status_codes[code] > 0:
@@ -29,29 +28,29 @@ def main():
 
     try:
         for line in sys.stdin:
-            parts = line.split()
-
             try:
+                parts = line.split()
+
                 status = int(parts[-2])
                 size = int(parts[-1])
-            except (IndexError, ValueError):
-                continue
 
-            total_size += size
+                total_size += size
 
-            if status in status_codes:
-                status_codes[status] += 1
+                if status in status_codes:
+                    status_codes[status] += 1
 
-            line_count += 1
+                line_count += 1
 
-            if line_count % 10 == 0:
-                print_stats(total_size, status_codes)
+                if line_count % 10 == 0:
+                    print_stats(total_size, status_codes)
+
+            except:
+                continue  # skip only bad lines
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
         raise
 
-    # 🔥 IMPORTANT FIX: always print at end
     print_stats(total_size, status_codes)
 
 
