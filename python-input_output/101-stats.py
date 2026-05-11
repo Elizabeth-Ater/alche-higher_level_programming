@@ -28,26 +28,24 @@ def main():
 
     try:
         for line in sys.stdin:
-            try:
-                parts = line.split()
+            parts = line.split()
 
-                # ONLY extract last two fields directly
+            try:
                 status = int(parts[-2])
                 size = int(parts[-1])
-
-                total_size += size
-
-                if status in status_codes:
-                    status_codes[status] += 1
-
-                count += 1
-
-                if count % 10 == 0:
-                    print_stats(total_size, status_codes)
-
             except:
-                # IMPORTANT: do NOT silently skip valid lines
+                # wrong format → ignore line
                 continue
+
+            total_size += size
+
+            if status in status_codes:
+                status_codes[status] += 1
+
+            count += 1
+
+            if count % 10 == 0:
+                print_stats(total_size, status_codes)
 
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
