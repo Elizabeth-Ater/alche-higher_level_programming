@@ -1,19 +1,21 @@
 #!/usr/bin/python3
+"""Log parsing and statistics computation from stdin."""
+
 import sys
 
 
-def print_stats(total_size, status_counts):
-    """Print accumulated metrics"""
+def print_stats(total_size, status_codes):
+    """Print accumulated statistics."""
     print(f"File size: {total_size}")
-    for code in sorted(status_counts.keys()):
-        count = status_counts[code]
-        if count:
-            print(f"{code}: {count}")
+    for code in sorted(status_codes):
+        if status_codes[code]:
+            print(f"{code}: {status_codes[code]}")
 
 
 def main():
+    """Process log lines from stdin and compute metrics."""
     total_size = 0
-    status_counts = {
+    status_codes = {
         "200": 0,
         "301": 0,
         "400": 0,
@@ -24,31 +26,34 @@ def main():
         "500": 0,
     }
 
-    line_count = 0
+    count = 0
 
     try:
         for line in sys.stdin:
             parts = line.split()
 
-            try:
-                status = parts[-2]
-                size = int(parts[-1])
-            except (IndexError, ValueError):
+            if len(parts) < 2:
                 continue
 
-            if status in status_counts:
-                status_counts[status] += 1
+            try:
+                status = parts[-2]
+                file_size = int(parts[-1])
+            except (ValueError, IndexError):
+                continue
 
-            total_size += size
-            line_count += 1
+            if status in status_codes:
+                status_codes[status] += 1
 
-            if line_count % 10 == 0:
-                print_stats(total_size, status_counts)
+            total_size += file_size
+            count += 1
+
+            if count % 10 == 0:
+                print_stats(total_size, status_codes)
 
     except KeyboardInterrupt:
         pass
     finally:
-        print_stats(total_size, status_counts)
+        print_stats(total_size, status_codes)
 
 
 if __name__ == "__main__":
