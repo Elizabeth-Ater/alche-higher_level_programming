@@ -1,9 +1,11 @@
--- Create database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS hbtn_0d_2;
+-- the mysql command-line tool or a MySQL client application.
 
--- Create user if it doesn't exist with password
-CREATE USER IF NOT EXISTS 'user_0d_2'@'localhost'
-IDENTIFIED BY 'user_0d_2_pwd';
+CREATE USER IF NOT EXISTS user_0d_1@localhost IDENTIFIED BY 'user_0d_1_pwd';
 
--- Grant only SELECT privilege on the database
-GRANT SELECT ON hbtn_0d_2.* TO 'user_0d_2'@'localhost';
+-- Grant all privileges to user_0d_1. 
+GRANT ALL PRIVILEGES ON *.* TO user_0d_1@localhost WITH GRANT OPTION;
+
+-- Flush privileges to apply the changes.
+FLUSH PRIVILEGES;
+
+EXIT
